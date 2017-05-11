@@ -38,26 +38,16 @@
                     <groupId>org.bytedeco.javacpp-presets</groupId>
                     <artifactId>hdf5</artifactId>
                 </exclusion>
+                <exclusion>
+                    <groupId>com.clearspring.analytics</groupId>
+                    <artifactId>stream</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
         <dependency>
             <groupId>org.nd4j</groupId>
             <artifactId>nd4j-native</artifactId>
             <version>0.8.0</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.bytedeco.javacpp-presets</groupId>
-                    <artifactId>opencv</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.bytedeco.javacpp-presets</groupId>
-                    <artifactId>leptonica</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.bytedeco.javacpp-presets</groupId>
-                    <artifactId>hdf5</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
     </dependencies>
 
@@ -69,6 +59,19 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
                 <version>2.3</version>
+                <configuration>
+                    <artifactSet>
+                        <excludes>
+                            <exclude>org.bytedeco.javacpp-presets:openblas:jar:android*</exclude>
+                            <exclude>org.bytedeco.javacpp-presets:openblas:jar:macos*</exclude>
+                            <exclude>org.bytedeco.javacpp-presets:openblas:jar:windows*</exclude>
+                            <exclude>org.bytedeco.javacpp-presets:openblas:jar:linux-ppc64le</exclude>
+                            <exclude>org.bytedeco.javacpp-presets:openblas:jar:linux-armhf</exclude>
+                            <exclude>org.nd4j:nd4j:net</exclude>
+                        </excludes>
+                    </artifactSet>
+                </configuration>
+
                 <executions>
                     <execution>
                         <phase>package</phase>
