@@ -67,7 +67,6 @@
                             <exclude>org.bytedeco.javacpp-presets:openblas:jar:windows*</exclude>
                             <exclude>org.bytedeco.javacpp-presets:openblas:jar:linux-ppc64le</exclude>
                             <exclude>org.bytedeco.javacpp-presets:openblas:jar:linux-armhf</exclude>
-                            <exclude>org.nd4j:nd4j:net</exclude>
                         </excludes>
                     </artifactSet>
                 </configuration>

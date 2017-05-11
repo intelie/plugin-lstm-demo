@@ -34,9 +34,11 @@ public class TrainerTask implements Runnable {
     private final String testSpan;
     private final double batchFactor;
     private final int epochs;
+    private final double learningRate;
     private double completion;
+    private int neuronsHiddenLayer;
 
-    public TrainerTask(Live live, String qualifier, String query, String trainSpan, String testSpan, double batchFactor, int epochs) {
+    public TrainerTask(Live live, String qualifier, String query, String trainSpan, String testSpan, double batchFactor, int epochs, double learningRate, int neuronsHiddenLayer) {
         this.live = live;
         this.qualifier = qualifier;
         this.query = query;
@@ -44,6 +46,8 @@ public class TrainerTask implements Runnable {
         this.testSpan = testSpan;
         this.batchFactor = batchFactor;
         this.epochs = epochs;
+        this.learningRate = learningRate;
+        this.neuronsHiddenLayer = neuronsHiddenLayer;
     }
 
     public double getCompletion() {
@@ -89,12 +93,12 @@ public class TrainerTask implements Runnable {
                 .iterations(1)
                 .weightInit(WeightInit.XAVIER)
                 .updater(Updater.NESTEROVS).momentum(0.9)
-                .learningRate(0.000015)
+                .learningRate(learningRate)
                 .list()
-                .layer(0, new GravesLSTM.Builder().activation(Activation.TANH).nIn(1).nOut(10)
+                .layer(0, new GravesLSTM.Builder().activation(Activation.TANH).nIn(1).nOut(neuronsHiddenLayer)
                         .build())
                 .layer(1, new RnnOutputLayer.Builder(LossFunctions.LossFunction.MSE)
-                        .activation(Activation.IDENTITY).nIn(10).nOut(1).build())
+                        .activation(Activation.IDENTITY).nIn(neuronsHiddenLayer).nOut(1).build())
                 .build();
 
         MultiLayerNetwork net = new MultiLayerNetwork(conf);

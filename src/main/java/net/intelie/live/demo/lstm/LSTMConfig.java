@@ -10,7 +10,9 @@ public class LSTMConfig implements ExtensionConfig {
     private String trainSpan;
     private String testSpan;
     private double batchSizeFactor = 0.2;
-    private int epochs = 200;
+    private int epochs = 300;
+    private int neuronsHiddenLayer = 6;
+    private double learningRate = 0.00015;
 
     @Override
     public String summarize() {
@@ -34,7 +36,7 @@ public class LSTMConfig implements ExtensionConfig {
 
     public ElementHandle create(PrefixedLive live, ExtensionQualifier qualifier) throws Exception {
         ExecutorService executor = live.system().requestExecutor(1, 1, "");
-        TrainerTask trainer = new TrainerTask(live, qualifier.qualifier(), query, trainSpan, testSpan, batchSizeFactor, epochs);
+        TrainerTask trainer = new TrainerTask(live, qualifier.qualifier(), query, trainSpan, testSpan, batchSizeFactor, epochs, learningRate, neuronsHiddenLayer);
         executor.submit(trainer);
         return new ElementHandle.Default(live) {
             @Override
